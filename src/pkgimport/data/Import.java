@@ -57,27 +57,27 @@ public class Import extends SwingWorker<Void, Void> {
                 }
 
                 /* Proses Insert ke database */
-//                DataToInsert = datanya.split("#");
-//                SQL_Insert = "INSERT INTO tb_detail VALUES(";
-//                for (i = 0; i <= (DataToInsert.length - 1); i++) {
-//                    SQL_Insert += "'" + DataToInsert[i].trim() + "'";
-//                    if (i < (DataToInsert.length - 1)) {
-//                        SQL_Insert += ",";
-//                    }
-//                }
-//                SQL_Insert += ")";
-//
-//                s = con.createStatement();
-//                s.execute(SQL_Insert);
-
-                SQL_Insert = "";
                 DataToInsert = datanya.split("#");
+                SQL_Insert = "INSERT INTO tb_pegawai (nik, nama, bagian) VALUES (";
                 for (i = 0; i <= (DataToInsert.length - 1); i++) {
                     SQL_Insert += "'" + DataToInsert[i].trim() + "'";
                     if (i < (DataToInsert.length - 1)) {
                         SQL_Insert += ",";
                     }
                 }
+                SQL_Insert += ");";
+
+                s = con.createStatement();
+                s.execute(SQL_Insert);
+
+//                SQL_Insert = "";
+//                DataToInsert = datanya.split("#");
+//                for (i = 0; i <= (DataToInsert.length - 1); i++) {
+//                    SQL_Insert += "'" + DataToInsert[i].trim() + "'";
+//                    if (i < (DataToInsert.length - 1)) {
+//                        SQL_Insert += ",";
+//                    }
+//                }
 
                 System.out.println(SQL_Insert);
                 datanya = "";

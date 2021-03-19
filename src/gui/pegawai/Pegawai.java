@@ -6,9 +6,17 @@
 package gui.pegawai;
 
 import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 import pkgimport.data.Import;
+import pkgimport.data.KoneksiDB;
 
 /**
  *
@@ -23,8 +31,50 @@ public class Pegawai extends javax.swing.JFrame {
     private JFileChooser jfc;
     private File file;
 
-    public Pegawai() {
+    private Connection con;
+    private Statement s;
+    private ResultSet rs;
+    private String sql;
+
+    public Pegawai() throws SQLException {
         initComponents();
+
+        this.setUndecorated(true);
+
+        con = KoneksiDB.getKoneksi();
+        s = con.createStatement();
+
+        load_table();
+    }
+
+    public void load_table() {
+        // membuat tampilan model tabel
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("Nik");
+        model.addColumn("Nama");
+        model.addColumn("Bagian");
+        model.addColumn("Status");
+
+        //menampilkan data database kedalam tabel
+        try {
+            int no = 1;
+            String status = "";
+
+            String sql = "SELECT * FROM tb_pegawai";
+            java.sql.ResultSet res = s.executeQuery(sql);
+            while (res.next()) {
+                if (res.getInt(5) == 1) {
+                    status = "aktif";
+                } else {
+                    status = "non-aktif";
+                }
+                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), status});
+            }
+            tabel_pegawai.setModel(model);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -36,60 +86,150 @@ public class Pegawai extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        btn_import = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        btn_refresh = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabel_pegawai = new javax.swing.JTable();
+        btn_power = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu2 = new javax.swing.JMenu();
+        menu_import = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DAFTAR PEGAWAI");
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DAFTAR PEGAWAI");
+        jPanel1.setBackground(new java.awt.Color(17, 91, 238));
 
-        btn_import.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
-        btn_import.setText("IMPORT");
-        btn_import.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DAFTAR PEGAWAI");
+
+        btn_refresh.setBackground(new java.awt.Color(18, 239, 165));
+        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reload.png"))); // NOI18N
+        btn_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_importActionPerformed(evt);
+                btn_refreshActionPerformed(evt);
             }
         });
+
+        tabel_pegawai.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tabel_pegawai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabel_pegawaiMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tabel_pegawai);
+
+        btn_power.setBackground(new java.awt.Color(239, 18, 18));
+        btn_power.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/power.png"))); // NOI18N
+        btn_power.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_powerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        jMenu2.setText("Aksi");
+
+        menu_import.setText("Import");
+        menu_import.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_importActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menu_import);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_import)
-                .addContainerGap(521, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(876, 639));
+        setSize(new java.awt.Dimension(870, 639));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_importActionPerformed
+    private void menu_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_importActionPerformed
         jfc = new JFileChooser();
         jfc.setDialogTitle("Pilih File Excel");
         if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             file = jfc.getSelectedFile();
             new Import(file.getAbsolutePath()).execute();
         }
-        
-    }//GEN-LAST:event_btn_importActionPerformed
+
+    }//GEN-LAST:event_menu_importActionPerformed
+
+    private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
+        load_table();
+    }//GEN-LAST:event_btn_refreshActionPerformed
+
+    private void tabel_pegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pegawaiMouseClicked
+        int baris = tabel_pegawai.rowAtPoint(evt.getPoint());
+        String nik = tabel_pegawai.getValueAt(baris, 1).toString();
+
+        try {
+            Edit_pegawai fa = new Edit_pegawai();
+            fa.setText(nik);
+            fa.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_tabel_pegawaiMouseClicked
+
+    private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btn_powerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -121,13 +261,24 @@ public class Pegawai extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Pegawai().setVisible(true);
+                try {
+                    new Pegawai().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_import;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btn_power;
+    private javax.swing.JButton btn_refresh;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JMenuItem menu_import;
+    private javax.swing.JTable tabel_pegawai;
     // End of variables declaration//GEN-END:variables
 }

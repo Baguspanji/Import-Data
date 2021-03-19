@@ -13,7 +13,7 @@ public class KoneksiDB {
 
     public static Connection getKoneksi() {
         if (con == null) {
-            url = "jdbc:mysql://localhost/db_test";
+            url = "jdbc:mysql://localhost/boma_pegawai";
             username = "root";
             password = "";
 
