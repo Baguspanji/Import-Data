@@ -91,7 +91,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(195, 107, 7));
 
         btn_status.setBackground(new java.awt.Color(161, 32, 16));
-        btn_status.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btn_status.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
         btn_status.setText("STATUS");
         btn_status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +100,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
         });
 
         btn_update.setBackground(new java.awt.Color(237, 200, 11));
-        btn_update.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btn_update.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
         btn_update.setText("UPDATE");
         btn_update.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +109,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
         });
 
         btn_back.setBackground(new java.awt.Color(106, 111, 121));
-        btn_back.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        btn_back.setFont(new java.awt.Font("Century Gothic", 1, 15)); // NOI18N
         btn_back.setText("BACK");
         btn_back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,10 +117,12 @@ public class Edit_pegawai extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(jLabel2.getFont().deriveFont(jLabel2.getFont().getSize()+3f));
         jLabel2.setText("Nik");
 
         txt_nik.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
 
+        jLabel3.setFont(jLabel3.getFont().deriveFont(jLabel3.getFont().getSize()+3f));
         jLabel3.setText("Nama");
 
         txt_nama.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -130,6 +132,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(jLabel4.getFont().deriveFont(jLabel4.getFont().getSize()+3f));
         jLabel4.setText("Bagian");
 
         txt_bagian.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -139,6 +142,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setFont(jLabel5.getFont().deriveFont(jLabel5.getFont().getSize()+3f));
         jLabel5.setText("Status");
 
         txt_status.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
@@ -148,7 +152,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("EDIT PEGAWAI");
 
@@ -161,10 +165,10 @@ public class Edit_pegawai extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btn_update, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_status, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_back, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btn_status))
                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_nik, javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +181,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_status, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -209,7 +213,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
                     .addComponent(btn_status)
                     .addComponent(btn_update)
                     .addComponent(btn_back))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
@@ -14,7 +17,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class Import extends SwingWorker<Void, Void> {
+public class ImportAbsen extends SwingWorker<Void, Void> {
 
     private String lokasi, datanya, SQL_Insert;
     private String[] DataToInsert;
@@ -23,7 +26,7 @@ public class Import extends SwingWorker<Void, Void> {
     private Connection con;
     private Statement s;
 
-    public Import(String fileExcel) {
+    public ImportAbsen(String fileExcel) {
         this.lokasi = fileExcel;
     }
 
@@ -58,26 +61,17 @@ public class Import extends SwingWorker<Void, Void> {
 
                 /* Proses Insert ke database */
                 DataToInsert = datanya.split("#");
-                SQL_Insert = "INSERT INTO tb_pegawai (nik, nama, bagian) VALUES (";
-                for (i = 0; i <= (DataToInsert.length - 1); i++) {
-                    SQL_Insert += "'" + DataToInsert[i].trim() + "'";
-                    if (i < (DataToInsert.length - 1)) {
-                        SQL_Insert += ",";
-                    }
-                }
+                SQL_Insert = "";
+                SQL_Insert = "INSERT INTO tb_absen (nik, tanggal) VALUES (";
+                    SQL_Insert += "'" + DataToInsert[0].trim() + "',";
+                    Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(DataToInsert[2].trim());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    String strDate = dateFormat.format(date);
+                    SQL_Insert += "'" + strDate + "'";
                 SQL_Insert += ");";
 
                 s = con.createStatement();
                 s.execute(SQL_Insert);
-
-//                SQL_Insert = "";
-//                DataToInsert = datanya.split("#");
-//                for (i = 0; i <= (DataToInsert.length - 1); i++) {
-//                    SQL_Insert += "'" + DataToInsert[i].trim() + "'";
-//                    if (i < (DataToInsert.length - 1)) {
-//                        SQL_Insert += ",";
-//                    }
-//                }
 
                 System.out.println(SQL_Insert);
                 datanya = "";

@@ -69,7 +69,7 @@ public class FrameImport {
                 jfc.setDialogTitle("Pilih File Excel");
                 if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
                     file = jfc.getSelectedFile();
-                    new Import(file.getAbsolutePath()).execute();
+                    new ImportPegawai(file.getAbsolutePath()).execute();
                 }
             }
         });

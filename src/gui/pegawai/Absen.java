@@ -10,19 +10,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
-import pkgimport.data.ImportPegawai;
+import pkgimport.data.ImportAbsen;
 import pkgimport.data.KoneksiDB;
 
 /**
  *
  * @author JuruKetik
  */
-public class Pegawai extends javax.swing.JFrame {
+public class Absen extends javax.swing.JFrame {
 
     /**
      * Creates new form Pegawai
@@ -36,7 +39,7 @@ public class Pegawai extends javax.swing.JFrame {
     private ResultSet rs;
     private String sql;
 
-    public Pegawai() throws SQLException {
+    public Absen() throws SQLException {
         initComponents();
 
         this.setUndecorated(true);
@@ -44,32 +47,33 @@ public class Pegawai extends javax.swing.JFrame {
         con = KoneksiDB.getKoneksi();
         s = con.createStatement();
 
-        load_table();
     }
 
-    public void load_table() {
+    public void load_table(String dateFrom, String dateTo) {
         // membuat tampilan model tabel
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No");
         model.addColumn("Nik");
         model.addColumn("Nama");
         model.addColumn("Bagian");
-        model.addColumn("Status");
+        model.addColumn("Tanggal");
 
         //menampilkan data database kedalam tabel
         try {
             int no = 1;
             String status = "";
 
-            String sql = "SELECT * FROM tb_pegawai";
+            String sql = "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `a`.`tanggal` "
+                    + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
+                    + "WHERE (tanggal BETWEEN '" + dateFrom + "' AND '" + dateTo + "')";
             java.sql.ResultSet res = s.executeQuery(sql);
             while (res.next()) {
-                if (res.getInt(5) == 1) {
-                    status = "aktif";
-                } else {
-                    status = "non-aktif";
-                }
-                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), status});
+//                if (res.getInt(5) == 1) {
+//                    status = "aktif";
+//                } else {
+//                    status = "non-aktif";
+//                }
+                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), res.getString(5)});
             }
             tabel_pegawai.setModel(model);
         } catch (Exception e) {
@@ -93,7 +97,8 @@ public class Pegawai extends javax.swing.JFrame {
         tabel_pegawai = new javax.swing.JTable();
         btn_power = new javax.swing.JButton();
         btn_import = new javax.swing.JButton();
-        btn_absen = new javax.swing.JButton();
+        date_from = new com.toedter.calendar.JDateChooser();
+        date_to = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DAFTAR PEGAWAI");
@@ -105,7 +110,10 @@ public class Pegawai extends javax.swing.JFrame {
         jLabel2.setText("DAFTAR PEGAWAI");
 
         btn_refresh.setBackground(new java.awt.Color(18, 239, 165));
-        btn_refresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reload.png"))); // NOI18N
+        btn_refresh.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
+        btn_refresh.setText("LIHAT");
+        btn_refresh.setHideActionText(true);
+        btn_refresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn_refresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refreshActionPerformed(evt);
@@ -115,13 +123,13 @@ public class Pegawai extends javax.swing.JFrame {
         tabel_pegawai.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         tabel_pegawai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "No", "NIK", "Nama", "Bagian", "Tanggal"
             }
         ));
         tabel_pegawai.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,6 +138,11 @@ public class Pegawai extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(tabel_pegawai);
+        if (tabel_pegawai.getColumnModel().getColumnCount() > 0) {
+            tabel_pegawai.getColumnModel().getColumn(0).setResizable(false);
+            tabel_pegawai.getColumnModel().getColumn(1).setResizable(false);
+            tabel_pegawai.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         btn_power.setBackground(new java.awt.Color(239, 18, 18));
         btn_power.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/power.png"))); // NOI18N
@@ -148,14 +161,15 @@ public class Pegawai extends javax.swing.JFrame {
             }
         });
 
-        btn_absen.setBackground(new java.awt.Color(255, 153, 0));
-        btn_absen.setForeground(new java.awt.Color(245, 30, 30));
-        btn_absen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/calendar-icon.png"))); // NOI18N
-        btn_absen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_absenActionPerformed(evt);
-            }
-        });
+        date_from.setBackground(new java.awt.Color(102, 255, 102));
+        date_from.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        date_from.setDateFormatString("dd-MM-yyyy");
+        date_from.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+
+        date_to.setBackground(new java.awt.Color(102, 255, 102));
+        date_to.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        date_to.setDateFormatString("dd-MM-yyyy");
+        date_to.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -164,14 +178,16 @@ public class Pegawai extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_from, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(date_to, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -182,13 +198,14 @@ public class Pegawai extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_refresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_power, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_import, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(date_from, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(date_to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -208,21 +225,27 @@ public class Pegawai extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
-        load_table();
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDateFrom = dateFormat.format(date_from.getDate().getTime());
+        String strDateTo = dateFormat.format(date_to.getDate().getTime());
+
+        System.out.println("From : " + strDateFrom + " To : " + strDateTo);
+        load_table(strDateFrom, strDateTo);
     }//GEN-LAST:event_btn_refreshActionPerformed
 
     private void tabel_pegawaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_pegawaiMouseClicked
-        int baris = tabel_pegawai.rowAtPoint(evt.getPoint());
-        String nik = tabel_pegawai.getValueAt(baris, 1).toString();
-
-        try {
-            Edit_pegawai fa = new Edit_pegawai();
-            fa.setText(nik);
-            fa.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.setVisible(false);
+//        int baris = tabel_pegawai.rowAtPoint(evt.getPoint());
+//        String nik = tabel_pegawai.getValueAt(baris, 1).toString();
+//
+//        try {
+//            Edit_pegawai fa = new Edit_pegawai();
+//            fa.setText(nik);
+//            fa.setVisible(true);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(Absen.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        this.setVisible(false);
     }//GEN-LAST:event_tabel_pegawaiMouseClicked
 
     private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
@@ -234,19 +257,9 @@ public class Pegawai extends javax.swing.JFrame {
         jfc.setDialogTitle("Pilih File Excel");
         if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
             file = jfc.getSelectedFile();
-            new ImportPegawai(file.getAbsolutePath()).execute();
+            new ImportAbsen(file.getAbsolutePath()).execute();
         }
     }//GEN-LAST:event_btn_importActionPerformed
-
-    private void btn_absenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_absenActionPerformed
-        try {
-            Absen fa = new Absen();
-            fa.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        this.setVisible(false);
-    }//GEN-LAST:event_btn_absenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,21 +278,22 @@ public class Pegawai extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Absen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Absen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Absen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Pegawai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Absen.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Pegawai().setVisible(true);
+                    new Absen().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -288,10 +302,11 @@ public class Pegawai extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_absen;
     private javax.swing.JButton btn_import;
     private javax.swing.JButton btn_power;
     private javax.swing.JButton btn_refresh;
+    private com.toedter.calendar.JDateChooser date_from;
+    private com.toedter.calendar.JDateChooser date_to;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
