@@ -278,10 +278,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
                 s = con.createStatement();
                 s.execute(query);
 
-                Pegawai fa = new Pegawai();
-                fa.setVisible(true);
-
-                this.setVisible(false);
+                setText(nik);
             }
         } catch (Exception e) {
             e.printStackTrace();

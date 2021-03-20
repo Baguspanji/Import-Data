@@ -92,9 +92,7 @@ public class Pegawai extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tabel_pegawai = new javax.swing.JTable();
         btn_power = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu2 = new javax.swing.JMenu();
-        menu_import = new javax.swing.JMenuItem();
+        btn_import = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DAFTAR PEGAWAI");
@@ -139,6 +137,15 @@ public class Pegawai extends javax.swing.JFrame {
             }
         });
 
+        btn_import.setBackground(new java.awt.Color(209, 239, 18));
+        btn_import.setForeground(new java.awt.Color(245, 30, 30));
+        btn_import.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/import-icon.png"))); // NOI18N
+        btn_import.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_importActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,6 +157,8 @@ public class Pegawai extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -162,25 +171,12 @@ public class Pegawai extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
+                .addContainerGap())
         );
-
-        jMenu2.setText("Aksi");
-
-        menu_import.setText("Import");
-        menu_import.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_importActionPerformed(evt);
-            }
-        });
-        jMenu2.add(menu_import);
-
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -190,24 +186,12 @@ public class Pegawai extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(870, 639));
+        setSize(new java.awt.Dimension(870, 535));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void menu_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_importActionPerformed
-        jfc = new JFileChooser();
-        jfc.setDialogTitle("Pilih File Excel");
-        if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
-            file = jfc.getSelectedFile();
-            new Import(file.getAbsolutePath()).execute();
-        }
-
-    }//GEN-LAST:event_menu_importActionPerformed
 
     private void btn_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refreshActionPerformed
         load_table();
@@ -230,6 +214,15 @@ public class Pegawai extends javax.swing.JFrame {
     private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btn_powerActionPerformed
+
+    private void btn_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_importActionPerformed
+        jfc = new JFileChooser();
+        jfc.setDialogTitle("Pilih File Excel");
+        if (jfc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+            file = jfc.getSelectedFile();
+            new Import(file.getAbsolutePath()).execute();
+        }
+    }//GEN-LAST:event_btn_importActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,14 +264,12 @@ public class Pegawai extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_import;
     private javax.swing.JButton btn_power;
     private javax.swing.JButton btn_refresh;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JMenuItem menu_import;
     private javax.swing.JTable tabel_pegawai;
     // End of variables declaration//GEN-END:variables
 }
