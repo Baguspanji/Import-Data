@@ -65,7 +65,7 @@ public class Absen extends javax.swing.JFrame {
 
             String sql = "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `a`.`tanggal` "
                     + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
-                    + "WHERE (tanggal BETWEEN '" + dateFrom + "' AND '" + dateTo + "')";
+                    + "WHERE (tanggal BETWEEN '" + dateFrom + "' AND '" + dateTo + "') ORDER BY nik ASC";
             java.sql.ResultSet res = s.executeQuery(sql);
             while (res.next()) {
 //                if (res.getInt(5) == 1) {
