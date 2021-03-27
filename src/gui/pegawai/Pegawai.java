@@ -94,6 +94,7 @@ public class Pegawai extends javax.swing.JFrame {
         btn_power = new javax.swing.JButton();
         btn_import = new javax.swing.JButton();
         btn_absen = new javax.swing.JButton();
+        btn_uang = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DAFTAR PEGAWAI");
@@ -157,6 +158,15 @@ public class Pegawai extends javax.swing.JFrame {
             }
         });
 
+        btn_uang.setBackground(new java.awt.Color(86, 255, 0));
+        btn_uang.setForeground(new java.awt.Color(245, 30, 30));
+        btn_uang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/login.png"))); // NOI18N
+        btn_uang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_uangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -172,6 +182,8 @@ public class Pegawai extends javax.swing.JFrame {
                         .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_uang, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -186,9 +198,10 @@ public class Pegawai extends javax.swing.JFrame {
                     .addComponent(btn_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_import, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_uang, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -248,6 +261,16 @@ public class Pegawai extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btn_absenActionPerformed
 
+    private void btn_uangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_uangActionPerformed
+        try {
+            UangMakan fa = new UangMakan();
+            fa.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_uangActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,6 +315,7 @@ public class Pegawai extends javax.swing.JFrame {
     private javax.swing.JButton btn_import;
     private javax.swing.JButton btn_power;
     private javax.swing.JButton btn_refresh;
+    private javax.swing.JButton btn_uang;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;

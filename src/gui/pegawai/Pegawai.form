@@ -57,6 +57,8 @@
                           <Component id="btn_import" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btn_absen" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="btn_uang" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btn_power" min="-2" pref="44" max="-2" attributes="0"/>
                       </Group>
@@ -76,9 +78,10 @@
                       <Component id="btn_power" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btn_import" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="btn_absen" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btn_uang" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="395" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="404" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -177,6 +180,22 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_absenActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btn_uang">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="ff" red="56" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="1e" green="1e" red="f5" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/image/login.png"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_uangActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
