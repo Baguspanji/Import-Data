@@ -64,8 +64,8 @@ public class ImportAbsen extends SwingWorker<Void, Void> {
                 SQL_Insert = "";
                 SQL_Insert = "INSERT INTO tb_absen (nik, tanggal) VALUES (";
                     SQL_Insert += "'" + DataToInsert[0].trim() + "',";
-                    Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(DataToInsert[2].trim());
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse(DataToInsert[2].trim());
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String strDate = dateFormat.format(date);
                     SQL_Insert += "'" + strDate + "'";
                 SQL_Insert += ");";

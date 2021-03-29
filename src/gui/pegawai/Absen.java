@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -20,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import pkgimport.data.ImportAbsen;
 import pkgimport.data.KoneksiDB;
+import models.Pegawai_model;
 
 /**
  *
@@ -36,8 +36,9 @@ public class Absen extends javax.swing.JFrame {
 
     private Connection con;
     private Statement s;
-    private ResultSet rs;
+    private ResultSet res;
     private String sql;
+    private Pegawai_model modelPegawai = new Pegawai_model();
 
     public Absen() throws SQLException {
         initComponents();
@@ -61,18 +62,10 @@ public class Absen extends javax.swing.JFrame {
         //menampilkan data database kedalam tabel
         try {
             int no = 1;
-            String status = "";
 
-            String sql = "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `a`.`tanggal` "
-                    + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
-                    + "WHERE (tanggal BETWEEN '" + dateFrom + "' AND '" + dateTo + "') ORDER BY nik ASC";
-            java.sql.ResultSet res = s.executeQuery(sql);
+            sql = modelPegawai.getAbsen(dateFrom, dateTo);
+            res = s.executeQuery(sql);
             while (res.next()) {
-//                if (res.getInt(5) == 1) {
-//                    status = "aktif";
-//                } else {
-//                    status = "non-aktif";
-//                }
                 model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), res.getString(5)});
             }
             tabel_pegawai.setModel(model);

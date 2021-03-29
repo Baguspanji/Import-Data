@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
 import pkgimport.data.ImportPegawai;
 import pkgimport.data.KoneksiDB;
+import models.Pegawai_model;
 
 /**
  *
@@ -33,8 +34,9 @@ public class Pegawai extends javax.swing.JFrame {
 
     private Connection con;
     private Statement s;
-    private ResultSet rs;
+    private ResultSet res;
     private String sql;
+    private Pegawai_model modelPegawai = new Pegawai_model();
 
     public Pegawai() throws SQLException {
         initComponents();
@@ -54,6 +56,7 @@ public class Pegawai extends javax.swing.JFrame {
         model.addColumn("Nik");
         model.addColumn("Nama");
         model.addColumn("Bagian");
+        model.addColumn("ESL");
         model.addColumn("Status");
 
         //menampilkan data database kedalam tabel
@@ -61,15 +64,16 @@ public class Pegawai extends javax.swing.JFrame {
             int no = 1;
             String status = "";
 
-            String sql = "SELECT * FROM tb_pegawai";
-            java.sql.ResultSet res = s.executeQuery(sql);
+            sql = modelPegawai.getData();
+            res = s.executeQuery(sql);
+            
             while (res.next()) {
-                if (res.getInt(5) == 1) {
+                if (res.getInt(6) == 1) {
                     status = "aktif";
                 } else {
                     status = "non-aktif";
                 }
-                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), status});
+                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4),res.getString(5), status});
             }
             tabel_pegawai.setModel(model);
         } catch (Exception e) {

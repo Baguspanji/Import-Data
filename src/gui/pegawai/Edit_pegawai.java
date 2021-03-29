@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import models.Pegawai_model;
 import pkgimport.data.KoneksiDB;
 
 /**
@@ -26,10 +27,11 @@ public class Edit_pegawai extends javax.swing.JFrame {
     private Connection con;
     private Statement s;
     private ResultSet rs;
+    private Pegawai_model modelPegawai = new Pegawai_model();
 
     public Edit_pegawai() throws SQLException {
         initComponents();
-        
+
         this.setUndecorated(true);
 
         txt_status.setEditable(false);
@@ -41,7 +43,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
 
     public void setText(String nik) {
         try {
-            String sql = "SELECT * FROM tb_pegawai WHERE nik = '" + nik + "'";
+            String sql = modelPegawai.getByNik(nik);
             rs = s.executeQuery(sql);
 
             while (rs.next()) {
@@ -249,7 +251,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
         String bagian = txt_bagian.getText();
 
         try {
-            String query = "UPDATE tb_pegawai SET nama='" + nama + "', bagian='" + bagian + "' WHERE nik='" + nik + "'";
+            String query = modelPegawai.setPegawaiAll(nama, bagian, nik);
 
             s = con.createStatement();
             s.execute(query);
@@ -268,7 +270,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
         String nik = txt_nik.getText();
 
         try {
-            String sql = "SELECT * FROM tb_pegawai WHERE nik = '" + nik + "'";
+            String sql = modelPegawai.getByNik(nik);
             rs = s.executeQuery(sql);
 
             while (rs.next()) {
@@ -277,7 +279,7 @@ public class Edit_pegawai extends javax.swing.JFrame {
                     status = 0;
                 }
 
-                String query = "UPDATE tb_pegawai SET status='" + status + "' WHERE nik='" + nik + "'";
+                String query = modelPegawai.setPegawaiStatus(status, nik);
 
                 s = con.createStatement();
                 s.execute(query);

@@ -59,10 +59,11 @@ public class ImportPegawai extends SwingWorker<Void, Void> {
                 /* Proses Insert ke database */
                 DataToInsert = datanya.split("#");
                 SQL_Insert = "";
-                SQL_Insert = "INSERT INTO tb_pegawai (nik, nama, bagian) VALUES (";
+                SQL_Insert = "INSERT INTO tb_pegawai (nik, nama, bagian, esl) VALUES (";
                     SQL_Insert += "'" + DataToInsert[0].trim() + "',";
                     SQL_Insert += "'" + DataToInsert[1].trim() + "',";
-                    SQL_Insert += "'" + DataToInsert[2].trim() + "'";
+                    SQL_Insert += "'" + DataToInsert[2].trim() + "',";
+                    SQL_Insert += "'" + DataToInsert[3].trim() + "'";
                 SQL_Insert += ");";
 
                 s = con.createStatement();
