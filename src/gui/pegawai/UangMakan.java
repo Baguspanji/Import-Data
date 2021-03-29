@@ -5,7 +5,6 @@
  */
 package gui.pegawai;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,9 +13,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.table.DefaultTableModel;
+import models.Pegawai_model;
 import pkgimport.data.KoneksiDB;
 
 /**
@@ -28,14 +26,11 @@ public class UangMakan extends javax.swing.JFrame {
     /**
      * Creates new form UangMakan
      */
-    private JFrame frame;
-    private JFileChooser jfc;
-    private File file;
-
     private Connection con;
     private Statement s;
-    private ResultSet rs;
+    private ResultSet res;
     private String sql;
+    private Pegawai_model modelPegawai = new Pegawai_model();
 
     public UangMakan() throws SQLException {
         initComponents();
@@ -44,8 +39,8 @@ public class UangMakan extends javax.swing.JFrame {
 
         con = KoneksiDB.getKoneksi();
         s = con.createStatement();
-        
-        load_table("2021-03-01", "2021-03-31");
+
+//        load_table("2021-03-01", "2021-03-30");
 
     }
 
@@ -56,24 +51,43 @@ public class UangMakan extends javax.swing.JFrame {
         model.addColumn("Nik");
         model.addColumn("Nama");
         model.addColumn("Bagian");
-        model.addColumn("Tanggal");
+        model.addColumn("ESL");
+        model.addColumn("Hari");
+        model.addColumn("Total");
 
         //menampilkan data database kedalam tabel
         try {
             int no = 1;
-            String status = "";
+            int hari = 0;
+            double uang = 0;
+            String total = "";
 
-            String sql = "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `a`.`tanggal` "
-                    + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
-                    + "WHERE (tanggal BETWEEN '" + dateFrom + "' AND '" + dateTo + "') ORDER BY nik ASC";
-            java.sql.ResultSet res = s.executeQuery(sql);
+            sql = modelPegawai.getUang(dateFrom, dateTo);
+            res = s.executeQuery(sql);
+
             while (res.next()) {
-//                if (res.getInt(5) == 1) {
-//                    status = "aktif";
-//                } else {
-//                    status = "non-aktif";
-//                }
-                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), res.getString(5)});
+                hari = modelPegawai.getUangNik(dateFrom, dateTo, res.getString(2));
+
+                int esl = modelPegawai.Romawi(res.getString(5).toUpperCase());
+
+                if (esl == 1) {
+                    uang = 15000;
+                } else if (esl == 2) {
+                    uang = 14000;
+                } else if (esl == 3) {
+                    uang = 13000;
+                } else if (esl == 4) {
+                    uang = 11000;
+                } else if (esl == 5) {
+                    uang = 10000;
+                } else if (esl == 6) {
+                    uang = 9000;
+                }
+                
+                total = modelPegawai.toRupiah(uang, hari);
+//                System.out.println(total);
+
+                model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4), res.getString(5), hari, total});
             }
             tabel_pegawai.setModel(model);
         } catch (Exception e) {
@@ -98,7 +112,7 @@ public class UangMakan extends javax.swing.JFrame {
         btn_power = new javax.swing.JButton();
         date_from = new com.toedter.calendar.JDateChooser();
         date_to = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        btn_lihat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uang Makan");
@@ -139,11 +153,11 @@ public class UangMakan extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
-        jButton1.setText("LIHAT");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_lihat.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
+        btn_lihat.setText("LIHAT");
+        btn_lihat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_lihatActionPerformed(evt);
             }
         });
 
@@ -165,7 +179,7 @@ public class UangMakan extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(date_to, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_lihat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -182,7 +196,7 @@ public class UangMakan extends javax.swing.JFrame {
                     .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_from, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(date_to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_lihat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addContainerGap())
@@ -217,14 +231,14 @@ public class UangMakan extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btn_powerActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_lihatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatActionPerformed
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strDateFrom = dateFormat.format(date_from.getDate().getTime());
         String strDateTo = dateFormat.format(date_to.getDate().getTime());
 
         System.out.println("From : " + strDateFrom + " To : " + strDateTo);
-//        load_table(strDateFrom, strDateTo);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        load_table(strDateFrom, strDateTo);
+    }//GEN-LAST:event_btn_lihatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -267,10 +281,10 @@ public class UangMakan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_lihat;
     private javax.swing.JButton btn_power;
     private com.toedter.calendar.JDateChooser date_from;
     private com.toedter.calendar.JDateChooser date_to;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
