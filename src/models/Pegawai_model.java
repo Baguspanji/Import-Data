@@ -17,7 +17,7 @@ public class Pegawai_model {
     int hari;
 
     public String getData() {
-        return "SELECT * FROM tb_pegawai";
+        return "SELECT * FROM tb_pegawai ORDER BY bagian ASC";
     }
 
     public String getByNik(String nik) {
@@ -28,14 +28,14 @@ public class Pegawai_model {
         return "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `a`.`tanggal` "
                 + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
                 + "WHERE (DATE_FORMAT(tanggal,'%Y-%m-%d') BETWEEN '" + dateFrom + "' AND '" + dateTo + "') AND "
-                + "`p`.`status` = 1 ORDER BY nik ASC";
+                + "`p`.`status` = 1 ORDER BY bagian ASC";
     }
 
     public String getUang(String dateFrom, String dateTo) {
         return "SELECT `a`.`id_absen`, `p`.`nik`, `p`.`nama`, `p`.`bagian`, `p`.`esl`, `a`.`tanggal` "
                 + "FROM `tb_absen` AS `a` JOIN `tb_pegawai` AS `p` ON `a`.`nik` = `p`.`nik` "
                 + "WHERE (DATE_FORMAT(tanggal,'%Y-%m-%d') BETWEEN '" + dateFrom + "' AND '" + dateTo + "') AND "
-                + "`p`.`status` = 1 GROUP BY nik";
+                + "`p`.`status` = 1 GROUP BY a.nik ORDER BY p.bagian ASC";
     }
 
     public int getUangNik(String dateFrom, String dateTo, String nik) throws SQLException, ParseException {

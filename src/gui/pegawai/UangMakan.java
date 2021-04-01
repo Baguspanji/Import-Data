@@ -5,6 +5,7 @@
  */
 package gui.pegawai;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import models.Pegawai_model;
+import pkgimport.data.ExcelWriter;
 import pkgimport.data.KoneksiDB;
 
 /**
@@ -113,6 +115,7 @@ public class UangMakan extends javax.swing.JFrame {
         date_from = new com.toedter.calendar.JDateChooser();
         date_to = new com.toedter.calendar.JDateChooser();
         btn_lihat = new javax.swing.JButton();
+        btn_export = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Uang Makan");
@@ -161,6 +164,14 @@ public class UangMakan extends javax.swing.JFrame {
             }
         });
 
+        btn_export.setBackground(new java.awt.Color(18, 21, 239));
+        btn_export.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/import-icon.png"))); // NOI18N
+        btn_export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -181,6 +192,8 @@ public class UangMakan extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_lihat, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -196,7 +209,8 @@ public class UangMakan extends javax.swing.JFrame {
                     .addComponent(btn_power, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(date_from, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(date_to, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_lihat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_lihat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_export, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addContainerGap())
@@ -240,6 +254,22 @@ public class UangMakan extends javax.swing.JFrame {
         load_table(strDateFrom, strDateTo);
     }//GEN-LAST:event_btn_lihatActionPerformed
 
+    private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDateFrom = dateFormat.format(date_from.getDate().getTime());
+        String strDateTo = dateFormat.format(date_to.getDate().getTime());
+
+        System.out.println("From : " + strDateFrom + " To : " + strDateTo);
+        ExcelWriter export = new ExcelWriter();
+        try {
+            export.exportAbsen(strDateFrom, strDateTo);
+        } catch (IOException ex) {
+            Logger.getLogger(UangMakan.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UangMakan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_exportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,6 +311,7 @@ public class UangMakan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_export;
     private javax.swing.JButton btn_lihat;
     private javax.swing.JButton btn_power;
     private com.toedter.calendar.JDateChooser date_from;

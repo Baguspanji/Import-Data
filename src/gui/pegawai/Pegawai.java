@@ -50,7 +50,7 @@ public class Pegawai extends javax.swing.JFrame {
     }
 
     public void load_table() {
-        // membuat tampilan model tabel
+        // membuat tampilan model tabel kolom
         DefaultTableModel model = new DefaultTableModel();
         model.addColumn("No");
         model.addColumn("Nik");
@@ -64,15 +64,19 @@ public class Pegawai extends javax.swing.JFrame {
             int no = 1;
             String status = "";
 
+            // query sql
             sql = modelPegawai.getData();
+            // eksekusi query
             res = s.executeQuery(sql);
             
+            // olah data dari sql
             while (res.next()) {
                 if (res.getInt(6) == 1) {
                     status = "aktif";
                 } else {
                     status = "non-aktif";
                 }
+                // data baris
                 model.addRow(new Object[]{no++, res.getString(2), res.getString(3), res.getString(4),res.getString(5), status});
             }
             tabel_pegawai.setModel(model);
