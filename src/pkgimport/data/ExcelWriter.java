@@ -119,9 +119,11 @@ public class ExcelWriter {
 
                 try (
                         //Write the workbook in file system
-                         FileOutputStream out = new FileOutputStream(file + ".xlsx")) {
+                        FileOutputStream out = new FileOutputStream(file + ".xlsx")) {
                     workbook.write(out);
                     out.close();
+
+                    JOptionPane.showMessageDialog(null, "Data berhasil disimpan!!");
                 }
 
             } catch (Exception e) {

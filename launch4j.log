@@ -1,0 +1,108 @@
+
+
+Version:	3.14
+CmdLine:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe --l4j-debug
+WOW64:		yes
+Create mutex:	Absensi Pegawai
+Working dir:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\.
+Java min ver:	1.000.005
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_281
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000_281
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_111
+Ignore:		1.008.000_111
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\11
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000
+Check:		SOFTWARE\JavaSoft\JDK\11.0.9
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000_009
+Runtime used:	1.011.000_009 (64-bit)
+Heap -Xms:	Requested 2 MB / 25%, Available: 3725 MB, Heap size: 931 MB
+Heap -Xmx:	Requested 10 MB / 50%, Available: 3725 MB, Heap size: 1862 MB
+Launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe
+Launcher args:	-Xms931m -Xmx1862m -jar "C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe"
+Args length:	95/32768 chars
+Exit code:	0
+
+
+Version:	3.14
+CmdLine:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe --l4j-debug
+WOW64:		yes
+Create mutex:	Absensi Pegawai
+Working dir:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\.
+Java min ver:	1.000.005
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_281
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000_281
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_111
+Ignore:		1.008.000_111
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\11
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000
+Check:		SOFTWARE\JavaSoft\JDK\11.0.9
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000_009
+Runtime used:	1.011.000_009 (64-bit)
+Heap -Xms:	Requested 2 MB / 25%, Available: 3849 MB, Heap size: 962 MB
+Heap -Xmx:	Requested 10 MB / 50%, Available: 3849 MB, Heap size: 1924 MB
+Launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe
+Launcher args:	-Xms962m -Xmx1924m -jar "C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe"
+Args length:	95/32768 chars
+Exit code:	0
+
+
+Version:	3.14
+CmdLine:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe --l4j-debug
+WOW64:		yes
+Create mutex:	Absensi Pegawai
+Working dir:	C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\.
+Java min ver:	1.000.005
+Java max ver:	
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_281
+Check launcher:	C:\Program Files\Java\jre1.8.0_281\bin\javaw.exe (OK)
+Match:		1.008.000_281
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Development Kit\1.8.0_111
+Ignore:		1.008.000_111
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\11
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000
+Check:		SOFTWARE\JavaSoft\JDK\11.0.9
+Check launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe (OK)
+Match:		1.011.000_009
+Runtime used:	1.011.000_009 (64-bit)
+Heap -Xms:	Requested 2 MB / 25%, Available: 3877 MB, Heap size: 969 MB
+Heap -Xmx:	Requested 10 MB / 50%, Available: 3877 MB, Heap size: 1938 MB
+Launcher:	C:\Program Files\Java\jdk-11.0.9\bin\javaw.exe
+Launcher args:	-Xms969m -Xmx1938m -jar "C:\Users\JuruKetik\Documents\NetBeansProjects\Import Data\Absensi.exe"
+Args length:	95/32768 chars
+Exit code:	0

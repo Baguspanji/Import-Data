@@ -31,7 +31,7 @@ public class Login extends javax.swing.JFrame {
     public Login() throws SQLException {
         initComponents();
         this.setUndecorated(true);
-        
+
         con = KoneksiDB.getKoneksi();
         s = con.createStatement();
     }
@@ -171,7 +171,12 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
-        System.exit(0);
+        if (JOptionPane.showConfirmDialog(null, "Apakah anda ingin keluar?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            // no option
+        }
     }//GEN-LAST:event_btn_powerActionPerformed
 
     /**

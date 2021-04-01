@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Pegawai_model;
 import pkgimport.data.ExcelWriter;
@@ -122,6 +123,7 @@ public class UangMakan extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(214, 104, 35));
 
+        tabel_pegawai.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         tabel_pegawai.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -156,7 +158,7 @@ public class UangMakan extends javax.swing.JFrame {
             }
         });
 
-        btn_lihat.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
+        btn_lihat.setFont(new java.awt.Font("Century Gothic", 1, 20)); // NOI18N
         btn_lihat.setText("LIHAT");
         btn_lihat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +166,7 @@ public class UangMakan extends javax.swing.JFrame {
             }
         });
 
-        btn_export.setBackground(new java.awt.Color(18, 21, 239));
+        btn_export.setBackground(new java.awt.Color(0, 204, 204));
         btn_export.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/import-icon.png"))); // NOI18N
         btn_export.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +244,12 @@ public class UangMakan extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
-        System.exit(0);
+        if (JOptionPane.showConfirmDialog(null, "Apakah anda ingin keluar?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            // no option
+        }
     }//GEN-LAST:event_btn_powerActionPerformed
 
     private void btn_lihatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihatActionPerformed

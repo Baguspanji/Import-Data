@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pkgimport.data.ImportPegawai;
 import pkgimport.data.KoneksiDB;
@@ -247,7 +248,12 @@ public class Pegawai extends javax.swing.JFrame {
     }//GEN-LAST:event_tabel_pegawaiMouseClicked
 
     private void btn_powerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_powerActionPerformed
-        System.exit(0);
+        if (JOptionPane.showConfirmDialog(null, "Apakah anda ingin keluar?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            // no option
+        }
     }//GEN-LAST:event_btn_powerActionPerformed
 
     private void btn_importActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_importActionPerformed
